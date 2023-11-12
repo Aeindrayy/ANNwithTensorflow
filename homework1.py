@@ -130,7 +130,7 @@ class CrossEntropyLoss:
     def backward(self, predicted_probs, true_labels):
         return predicted_probs - true_labels
 
-# Training function 
+# Training function ( this part is not working)
 def train_simple_mlp(mlp, train_images, train_labels, epochs, minibatch_size, learning_rate):
     loss_history = []
 
