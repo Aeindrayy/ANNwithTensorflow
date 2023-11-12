@@ -130,7 +130,7 @@ class CrossEntropyLoss:
     def backward(self, predicted_probs, true_labels):
         return predicted_probs - true_labels
 
-# Training function
+# Training function 
 def train_simple_mlp(mlp, train_images, train_labels, epochs, minibatch_size, learning_rate):
     loss_history = []
 
@@ -153,3 +153,17 @@ def train_simple_mlp(mlp, train_images, train_labels, epochs, minibatch_size, le
             for layer in mlp.layers:
                 layer.weights -= learning_rate * layer.grad_weights
                 layer.bias -= learning
+        avg_loss = total_loss / (len(train_data) // minibatch_size)
+        loss_history.append(avg_loss)
+
+        print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss}")
+
+        if validation_data is not None and validation_labels is not None:
+            validation_predictions = mlp.forward(validation_data)
+            validation_loss = loss_function(validation_predictions, validation_labels)
+            print(f"Validation Loss: {validation_loss}")
+
+    plt.plot(range(1, epochs + 1), loss_history)
+    plt.xlabel('Epoch')
+    plt.ylabel('Average Loss')
+    plt.show()
